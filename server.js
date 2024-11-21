@@ -1,5 +1,7 @@
 import express from "express";
+import conectarAoBanco from "./src/config/dbConnection.js";
 
+await conectarAoBanco(process.env.STRING_CONNECTION);
 
 // Dados falsos que está localmente na aplicação para simular uma api:
 const mock = [
