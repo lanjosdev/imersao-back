@@ -9,11 +9,19 @@ const db = conexaoDbCloud.db('imersao-back');
 //     { id: 3, descricao: "Gato fazendo panqueca", imagem: "https://placecats.com/millie/300/150"},
 // ];
 
-// Funções relacionadas ao DB:
-export async function getAllPosts() 
+// Funções relacionadas ao DB (MongoDB):
+export async function selectAllPosts() 
 {
     const collection = db.collection('posts');
 
-    //retorna os registors da colecao em array de objetos/registros
+    //retorna os registors da colecao em array dos objetos/registros
     return collection.find().toArray();
+}
+
+export async function insertPost(newPost)
+{
+    const collection = db.collection('posts');
+
+    //retorna os registors da colecao em array dos objetos/registros
+    return collection.insertOne(newPost);
 }
