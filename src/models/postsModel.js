@@ -31,7 +31,7 @@ export async function updatePostById(id, updatePost)
 {
     const collection = db.collection('posts');
 
-    const objID = ObjectId.createFromHexString(id);
+    const objID = ObjectId.createFromHexString(id); // etapa de acordo com a doc MongoDB
 
     return collection.updateOne({_id: new ObjectId(objID)}, {$set:updatePost});
 }

@@ -28,18 +28,21 @@ const routes = (app)=> {
     // Rota de pegar todos os posts (READ):
     app.get('/posts', readAllPosts);
 
-    // Rota de criar um novo post (CREATE):
-    app.post('/posts', createPost);
-
-    // Rota de uploads de imagens:
-    app.post('/upload', upload.single('file_image'), uploadImage);
-
-    // Rota de update post/upload:
-    app.put('/upload/:id', updatePost);
-
     // app.get('/posts/:id', (req, res)=> {
     //     const idx = getIdxPostByID(req.params.id);
     //     res.status(200).json(mock[idx]);
     // });
+
+    // Rota de criar um novo post (CREATE):
+    app.post('/posts', createPost);
+    
+
+
+
+    // Rota de uploads de imagens:
+    app.post('/upload', upload.single('file_image'), uploadImage);
+
+    // Rota de update post/upload: (não atualiza o arquivo de imagem, dados textuais)
+    app.put('/upload/:id', updatePost);
 };
 export default routes;
