@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import conectarAoBanco from '../config/dbConnection.js';
 
 const conexaoDbCloud = await conectarAoBanco(process.env.STRING_CONNECTION);
@@ -24,4 +25,13 @@ export async function insertPost(newPost)
 
     //retorna os registors da colecao em array dos objetos/registros
     return collection.insertOne(newPost);
+}
+
+export async function updatePostById(id, updatePost)
+{
+    const collection = db.collection('posts');
+
+    const objID = ObjectId.createFromHexString(id);
+
+    return collection.updateOne({_id: new ObjectId(objID)}, {$set:updatePost});
 }

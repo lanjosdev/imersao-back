@@ -1,4 +1,4 @@
-import { selectAllPosts, insertPost } from "../models/postsModel.js";
+import { selectAllPosts, insertPost, updatePostById } from "../models/postsModel.js";
 import fs from "fs";
 
 // function getIdxPostByID(idPost) 
@@ -42,6 +42,7 @@ export async function uploadImage(req, res)
         url_imagem: req.file.originalname,
         alt_imagem: ""
     };
+    // res.status(200).json(newPost.alt_imagem)
 
     try {
         const postCreated = await insertPost(newPost); //enviado no MongoDB
@@ -51,6 +52,32 @@ export async function uploadImage(req, res)
         fs.renameSync(req.file.path, pathImageRename); //Renomeia o arquivo desse caminho
 
         res.status(200).json(postCreated);
+    }
+    catch(error) {
+        console.error(error);
+
+        res.status(500).json({Erro: "Falha de execução"});
+    }
+}
+
+export async function updatePost(req, res) 
+{
+    const BASE_URL = process.env.BASE_URL;
+
+    const id = req.params.id;
+    const urlImagem = `${BASE_URL}/${id}.png`;
+    console.log(urlImagem);
+
+    const updatePost = {
+        descricao: req.body.descricao,
+        url_imagem: urlImagem,
+        alt_imagem: req.body.alt
+    };
+
+    try {
+        const postUpdate = await updatePostById(id, updatePost);
+
+        res.status(200).json(postUpdate);
     }
     catch(error) {
         console.error(error);
