@@ -1,5 +1,6 @@
 import express from "express"; // Importa o framework Express para criar a aplicação web
 import multer from "multer"; // Importa o Multer para lidar com uploads de arquivos
+import cors from "cors";
 import { readAllPosts, createPost, uploadImage, updatePost } from "../controllers/postsControllers.js"; // Importa as funções controladoras para lidar com a lógica dos posts
 
 // Configura o armazenamento do Multer para uploads de imagens
@@ -14,6 +15,12 @@ const storage = multer.diskStorage({
     }
 });
 
+// Configuração de CORS:
+const corsOptions = {
+    origin: "http://localhost:8000",
+    optionSuccessStatus: 200
+};
+
 // Cria uma instância do middleware Multer
 // const upload = multer({ storage: storage });
 const upload = multer({ dest: "./uploads", storage });
@@ -21,7 +28,9 @@ const upload = multer({ dest: "./uploads", storage });
 
 // Define as rotas usando o objeto Express app
 const routes = (app)=> {
+    //Middwares:
     app.use(express.json()); // Faz com q essa aplicação Express só responda com dados já convertidos em JSON
+    app.use(cors(corsOptions));
 
     // ROTAS:
 
@@ -35,7 +44,7 @@ const routes = (app)=> {
 
     // Rota de criar um novo post (CREATE):
     app.post('/posts', createPost);
-    
+
 
 
 

@@ -1,4 +1,5 @@
 import { selectAllPosts, insertPost, updatePostById } from "../models/postsModel.js";
+import gerarDescricaoComGemini from "../services/geminiService.js";
 import fs from "fs";
 
 // function getIdxPostByID(idPost) 
@@ -84,14 +85,15 @@ export async function updatePost(req, res)
     const id = req.params.id;
     const urlImagem = `${BASE_URL}/${id}.png`;
 
-    const updatePost = {
-        descricao: req.body.descricao,
-        url_imagem: urlImagem,
-        alt_imagem: req.body.alt_imagem
-    };
-    // Nem precisa da url_imagem pois já é feita no create/uploadImage (só add oq quer atualizar e o resto ficará intacto)
-
     try {
+        const imageBuffer = fs.readFileSync(`uploads/${id}.png`);
+        const descricaoGemini = await gerarDescricaoComGemini(imageBuffer);
+
+        const updatePost = {
+            descricao: descricaoGemini,
+            alt_imagem: req.body.alt_imagem
+        };
+
         const postUpdate = await updatePostById(id, updatePost);
 
         res.status(200).json(postUpdate);
