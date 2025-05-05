@@ -47,11 +47,13 @@ const routes = (app)=> {
 
 
 
-
     // Rota de uploads de imagens:
     app.post('/upload', upload.single('file_image'), uploadImage);
 
     // Rota de update post/upload: (não atualiza o arquivo de imagem, dados textuais)
     app.put('/upload/:id', updatePost);
+
+
+    // Nova rota aquiiiii
 };
 export default routes;

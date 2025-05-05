@@ -1,4 +1,4 @@
-import { selectAllPosts, insertPost, updatePostById } from "../models/postsModel.js";
+// import { selectAllPosts, insertPost, updatePostById } from "../models/postsModel.js";
 import gerarDescricaoComGemini from "../services/geminiService.js";
 import fs from "fs";
 
