@@ -78,6 +78,39 @@ export async function uploadImage(req, res)
     }
 }
 
+export async function uploadVideo(req, res) {
+    // const newPost = {
+    //     filename_original: req.file.originalname,
+    //     teste: req.file.path
+    // };
+    // console.log(newPost)
+
+    try {
+        //Processo de modificar o nome original do arquivo vindo do client (req)
+        const fileIdName = `${Date.now()}-${req.file.originalname}`;
+        const pathImageRename = `uploads/${fileIdName}`;
+        fs.renameSync(req.file.path, pathImageRename); //Renomeia o arquivo desse caminho
+
+
+        // Atualiza já com url da imagem
+        const BASE_URL = process.env.BASE_URL;
+        const urlVideo = `${BASE_URL}/${fileIdName}`;
+
+        const resUploadVideo = {
+            filename_original: req.file.originalname,
+            filename_unique: fileIdName,
+            url_video: urlVideo
+        };
+
+        res.status(200).json(resUploadVideo);
+    }
+    catch(error) {
+        console.error(error);
+
+        res.status(500).json({Erro: "Falha de execução"});
+    }
+}
+
 export async function updatePost(req, res) 
 {
     const BASE_URL = process.env.BASE_URL;
