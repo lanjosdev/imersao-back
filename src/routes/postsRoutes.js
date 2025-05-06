@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 // Configuração de CORS:
 const corsOptions = {
-    origin: "http://localhost:8000",
+    origin: "*",
     optionSuccessStatus: 200
 };
 
